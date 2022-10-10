@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encrypt Text - RSA</title>
+    <style>
+        input[type=text]{
+            font: normal 15pt Arial;                        
+            width: 1000px;
+            height: 200px;            
+            text-align:justify;
+            
+        }
+
+        input[type=button]{
+            font: normal 10pt Arial;                        
+            width: 1010px;
+            height: 50px;                        
+            margin-top: 20px;
+        }
+
+        div#encrypted{
+            font: normal 10pt Arial;                        
+            width: 1000px;
+            height: 200px;            
+            text-align: justify;
+        }
+    </style>
+    <script language="JavaScript" type="text/javascript" src="rsa-crypto.js"></script>
+
+    <!--<script>
+        
+        //var publicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs8BZ3lssJYX644cvL1XoG09+pq8hfeNY5N87mjGkgi1BgPjJPmSnIzy8QAf6UUUofzTd09bTxSjePteV+xLxOjCd1GjOx6IfUmd8g/6sMIH9cQcFAkyqfE20hUzPIhCp9hDpiSaTmD5s93W0ABG4dFF6HN4mAmnn7Zxp+2y7jHs1cq0dgONzfLWWNfabI8CAAb3xHbG2bQ5fO+citbiAsTrn0X5zNafu9TYyInUMhzGVc3m6BlWtTywSf7Qz3Z6GFtrBR1z3r+gek6iZ14xQ2ki0nNxd/CnpiCZjI5R1OUbaEZ79jrDaUfpJEO/fwKYYCmFqLBi/T85HBpEDsLtf7QIDAQAB";        
+    </script>-->
+</head>
+
+<body>
+
+    <label for="txtPublicKey">Public key RSA:</label><br>
+    <input type="text" id="txtPublicKey" ><br>
+
+    <label for="txtMensagem">Mensagem:</label><br>
+    <input type="text" id="txtMensagem"><br>
+    <input type="button" value="Encriptar" onclick="encryptyRSA()">
+
+    <div id="encrypted">
+
+    </div>
+
+    <script>
+
+        var textoEncriptado = document.querySelector("div#encrypted");
+
+        function encryptyRSA() {
+
+            var txtKey = document.querySelector("input#txtPublicKey");
+            var txtTexto = document.querySelector("input#txtMensagem");
+
+            if (txtKey.value.length == 0 || txtTexto.value.length == 0) {
+                window.alert("Todos os campos devem serem preenchidos!");
+                return;
+            }
+
+            var publicKey = txtKey.value;
+            var mensagem = txtTexto.value;
+
+            var encrypt = new JSEncrypt();
+            encrypt.setPublicKey(publicKey);            
+
+            var encryptedText = encrypt.encrypt(mensagem);
+
+            textoEncriptado.innerHTML = `<strong>${encryptedText}</strong>`;
+
+
+        }
+    </script>
+
+
+
+</body>
+
+</html>

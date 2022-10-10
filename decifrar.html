@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decrypt Text - RSA</title>
+    <style>
+        input[type=text]{
+            font: normal 15pt Arial;                        
+            width: 1000px;
+            height: 200px;            
+            text-align:justify;
+            
+        }
+
+        input[type=button]{
+            font: normal 10pt Arial;                        
+            width: 1010px;
+            height: 50px;                        
+            margin-top: 20px;
+        }
+
+        div#decrypted{
+            font: normal 10pt Arial;                        
+            width: 1000px;
+            height: 200px;            
+            text-align: justify;
+        }
+    </style>   
+      <!-- 
+        //var privateKey = "MIIEowIBAAKCAQEAs8BZ3lssJYX644cvL1XoG09+pq8hfeNY5N87mjGkgi1BgPjJPmSnIzy8QAf6UUUofzTd09bTxSjePteV+xLxOjCd1GjOx6IfUmd8g/6sMIH9cQcFAkyqfE20hUzPIhCp9hDpiSaTmD5s93W0ABG4dFF6HN4mAmnn7Zxp+2y7jHs1cq0dgONzfLWWNfabI8CAAb3xHbG2bQ5fO+citbiAsTrn0X5zNafu9TYyInUMhzGVc3m6BlWtTywSf7Qz3Z6GFtrBR1z3r+gek6iZ14xQ2ki0nNxd/CnpiCZjI5R1OUbaEZ79jrDaUfpJEO/fwKYYCmFqLBi/T85HBpEDsLtf7QIDAQABAoIBAHYpBqqFknKkLTWuYtUiCq8RRbc6vrBrZ78kA6Er6vFr4HhwkpHCRqCCR1lsJR+Rb7qXPQ8JVDJx2A7FVyEx5YMT/Fxp/Sv8JczcnFyEaBqHCNxo+eD2FsgZqIZL5ImHHMLVgT8YLcPRnX3aUNYO0AsemEArxB6oEb7/qCeP5YXFShLUljBBTzxkyIFIq4rsSkBT4oK6RwF+WelfioKAr+leOkr9ZjusLMJC2BpeoE0ZE904azuXDkqgTKQtr6JrG0UBKl1sB7CMpSSPjjt/NWeT/faGBB9zJEI7vi8vKCSaAFLuGBJfo03btecaNUDwhJ2QvLG2V2vbPN8aw+IP2l0CgYEA4UJ0R5Qfa3k5wIYtSo/uzsYTV6OcumiejZVi+O/uZTLUrdP4oZUtBeRUihLDheMsd1pRAkv/q/eBlGsfpJJvXnGxYlDtMCUAKUEklnq8VoGWzT2CrTd2/qPQ2/uPuTSFJL1ugHx1fbaO4acnA1AuXfA+ZLkn8sHJ/UDUL+iKLUcCgYEAzEgL9BCsDR0l/Krvug45tg32odP+/+GVRtoaxXXh3LscZUE/t14RDUOJNAlm9UIWtoKrM6wVqav1ue8tdMK+pTMB7gOSnM7gxRr2hDWB6Jwny7O7JvU0S3/hLOMpwMSVwOw1aip++Z+UPabh9AqPBf2bEmmTSlD5PLQJpLVKkysCgYEAjoAOtVVkBwY6XavELR4esZomlFOBi38xhlnRsa9+/XAJkSm+aOHJCKgoPuyd2i4bbCmrg6t2Q2ChDbYy31Zvs6xyzcJqOgG+N1rpfXSJfqQeNRpLd67VzULulqtugXhTHinkJM4XOX7qpp+qk3L+0hhwMCHdvrmPQXHoiaIu/3MCgYAT6vpvY6jC5pKrnicdpwFthNMFWFxGqsIZVG7DzgilswDDxqblxCA5gNpB3qDRTQ5V4Uu8EA1Uq9WbuXxfJBXemaiYgnSrIWi9DzH2FhmCiqc+r1mSJNpieieEbunFR+WqF93lahtTT4HuuPTTDKyBUwbptq2L03VZu9ws2RhaXQKBgAwwLrsft9d+31Ei5d0BRdtENWXS6b5xURIN1EEBvJzw2Em7zm5oD9dTliwYd1EEsUPvaMjA4Tmh+Bk2nQPUHdm+Lh47I7spmPHqluaEZ/Tpq2zP49oigABVkKoSpi2Pau5meBuCt3bMrs6BiQ6nsT5RHVq0b3yRZanLZ//ThvYP";-->
+
+        <script language="JavaScript" type="text/javascript" src="rsa-crypto.js"></script>
+
+</head>
+
+<body>
+
+    <label for="txtPrivateKey">Private key RSA:</label><br>
+    <input type="text" id="txtPrivateKey"><br>
+
+    <label for="txtEncryptedText">Encrypted Text:</label><br>
+    <input type="text" id="txtEncryptedText"><br>
+    <input type="button" value="Decifrar" onclick="decryptyRSA()">
+
+    <div id="decrypted">
+
+    </div>
+
+    <script>
+        var textoDecriptado= document.querySelector("div#decrypted");
+
+        function decryptyRSA() {
+
+
+            var txtKey = document.querySelector("input#txtPrivateKey");             
+            
+            var txtTexto = document.querySelector("input#txtEncryptedText");            
+
+            if (txtKey.value.length == 0 || txtTexto.value.length == 0) {
+
+                window.alert("Todos os campos devem ser preenchidos!");
+                return;
+            }
+
+            var privateKey = `-----BEGIN RSA PRIVATE KEY-----${txtKey.value}-----END RSA PRIVATE KEY-----`;
+            var encryptedText = txtTexto.value
+
+            var decrypt = new JSEncrypt();
+            decrypt.setPrivateKey(privateKey);
+            var decryptedText = decrypt.decrypt(encryptedText);  
+
+            textoDecriptado.innerHTML = `<strong>${decryptedText}</strong>`;
+            
+        }
+    </script>
+
+</body>
+
+</html>
